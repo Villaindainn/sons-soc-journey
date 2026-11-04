@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="Son's Journey — Gamified SOC Analyst learning path, missions, projects, and cybersecurity English vocabulary.">
+<title>Son's Journey | SOC Analyst Learning Path</title>
+<style>
+:root{
+  --bg:#050b14;--bg2:#081322;--panel:#0a1728;--panel2:#0d1d32;--line:#193653;
+  --text:#e8f2ff;--muted:#8ca6c4;--blue:#28a5ff;--cyan:#2de0d0;--purple:#a878ff;
+  --green:#35d49a;--orange:#ffad52;--pink:#ff5ebc;--red:#ff647c;--gold:#ffd166;
+  --radius:17px;--shadow:0 12px 35px #0005;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 70% -20%,#102c4b 0,transparent 42%),var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;min-height:100vh}
+button,input,select{font:inherit}
+button{cursor:pointer}
+a{color:var(--cyan)}
+.app{display:grid;grid-template-columns:245px minmax(0,1fr);min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;background:#06101d;border-right:1px solid var(--line);padding:22px 14px;display:flex;flex-direction:column;z-index:10}
+.brand{display:flex;align-items:center;gap:11px;padding:0 7px 24px}
+.brand-mark{width:42px;height:46px;border:2px solid var(--blue);border-radius:13px 13px 17px 17px;display:grid;place-items:center;color:var(--cyan);font-size:23px;box-shadow:0 0 20px #168cff25}
+.brand strong{font-size:17px;letter-spacing:.2px}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.nav{display:grid;gap:6px}
+.nav button{border:1px solid transparent;background:transparent;color:#b7c9df;text-align:left;padding:12px 13px;border-radius:10px;display:flex;align-items:center;gap:12px;font-size:13px;transition:.2s}
+.nav button:hover{background:#0d2035;color:white}.nav button.active{background:linear-gradient(100deg,#0c4b91,#102c55);border-color:#1765a7;color:#fff}
+.nav .ico{width:20px;text-align:center;font-size:17px}
+.sidebar-bottom{margin-top:auto;padding:15px 8px 4px;color:var(--muted);font-size:11px;line-height:1.7}
+.sidebar-bottom .quote{font-style:italic;color:#a8bdd6;margin-bottom:15px}
+.main{min-width:0;padding:22px 24px 35px;max-width:1700px;width:100%;margin:auto}
+.topbar{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.search-wrap{position:relative;flex:1}
+.search-wrap input{width:100%;background:#0b1a2d;border:1px solid var(--line);border-radius:12px;padding:12px 15px 12px 40px;color:var(--text);outline:none}
+.search-wrap span{position:absolute;left:14px;top:11px;color:var(--muted)}
+.top-actions{display:flex;gap:8px}
+.icon-btn{border:1px solid var(--line);background:#0b1a2d;color:#c9dcf4;width:40px;height:40px;border-radius:12px}
+.icon-btn:hover{border-color:var(--blue);color:white}
+.grid-main{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:16px}
+.content-col,.right-col{display:grid;align-content:start;gap:16px;min-width:0}
+.hero{position:relative;overflow:hidden;min-height:185px;padding:25px;border:1px solid #1a4268;border-radius:var(--radius);background:linear-gradient(110deg,#0b1c31 0%,#0c2542 60%,#101b3c 100%)}
+.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 75% 25%,#15558b55,transparent 35%),linear-gradient(120deg,transparent 35%,#1a315044 100%);pointer-events:none}
+.hero:after{content:"";position:absolute;right:4%;bottom:-40px;width:280px;height:160px;background:linear-gradient(145deg,transparent 35%,#153d60 36% 52%,#0c2138 53%);clip-path:polygon(0 100%,35% 10%,52% 62%,72% 0,100% 100%);opacity:.75}
+.hero-content{position:relative;z-index:1;max-width:75%}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--cyan);font-weight:800}
+.hero h1{font-size:clamp(22px,3vw,32px);margin:10px 0 8px;line-height:1.2}
+.hero h1 span{color:var(--cyan)}
+.hero p{color:#b4c9e2;margin:0;line-height:1.6;font-size:13px}
+.hero-bottom{display:flex;align-items:center;gap:12px;margin-top:18px;flex-wrap:wrap}
+.level-pill{border:1px solid #2872a7;background:#0b2945;padding:7px 10px;border-radius:9px;font-size:12px;font-weight:800}
+.xpbar{height:8px;background:#1c3550;border-radius:20px;overflow:hidden;flex:1;min-width:90px}
+.xpbar span{display:block;height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:20px;transition:width .4s}
+.xp-label{font-size:11px;color:#b4c9e2;white-space:nowrap}
+.stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stat{background:linear-gradient(145deg,#0a192b,#081524);border:1px solid var(--line);border-radius:14px;padding:14px;min-width:0}
+.stat-top{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:11px}
+.stat-icon{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#102a45;font-size:16px}
+.stat strong{display:block;font-size:20px;margin-top:9px}
+.stat small{color:var(--muted);font-size:10px}
+.panel{background:linear-gradient(145deg,#091727,#071321);border:1px solid var(--line);border-radius:var(--radius);padding:16px;min-width:0}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}
+.panel-head h2{font-size:15px;margin:0;display:flex;align-items:center;gap:9px}
+.panel-head .sub{font-size:11px;color:var(--muted)}
+.text-btn{background:none;border:0;color:var(--cyan);font-size:11px;padding:4px}
+.feature-mission{border:1px solid #17609b;background:linear-gradient(110deg,#0b2035,#0b2945);border-radius:13px;padding:17px;display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:14px;align-items:center}
+.mission-symbol{width:46px;height:46px;border-radius:14px;background:#0b3c61;border:1px solid #167fc0;display:grid;place-items:center;font-size:22px}
+.tag{display:inline-flex;align-items:center;gap:5px;border-radius:20px;padding:4px 8px;font-size:10px;background:#123b5d;color:#6ed1ff;border:1px solid #1b5e8c}
+.feature-mission h3{font-size:15px;margin:8px 0 5px}
+.feature-mission p{font-size:11px;color:#a9c2dd;line-height:1.55;margin:0}
+.meta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;color:#9cb7d2;font-size:10px}
+.btn{border:1px solid #1d70b4;background:linear-gradient(100deg,#0879d5,#1768c4);color:white;padding:10px 15px;border-radius:9px;font-size:12px;font-weight:700;transition:.2s}
+.btn:hover{filter:brightness(1.13);transform:translateY(-1px)}
+.btn.secondary{background:#0c2036;border-color:#244768;color:#c9def5}
+.btn.success{background:#0c392e;border-color:#1e8a67;color:#80f0c2}
+.btn.small{padding:7px 10px;font-size:10px}
+.roadmap{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}
+.road-card{position:relative;border:1px solid var(--line);background:#0a1929;border-radius:12px;padding:12px;min-height:132px;cursor:pointer;transition:.2s;overflow:hidden}
+.road-card:hover{transform:translateY(-2px);border-color:var(--blue)}
+.road-card .road-icon{font-size:20px;margin-bottom:8px}
+.road-card strong{font-size:11px;display:block;line-height:1.4}
+.road-card small{display:block;color:var(--muted);font-size:9px;margin-top:7px;line-height:1.5}
+.road-card .mini-progress{height:4px;background:#20364d;border-radius:9px;margin-top:10px;overflow:hidden}
+.road-card .mini-progress span{display:block;height:100%;background:var(--accent,var(--blue))}
+.road-card:after{content:"›";position:absolute;right:8px;top:50%;color:var(--accent,var(--blue));font-size:22px}
+.mission-toolbar{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.filter{border:1px solid var(--line);background:#0a1b2d;color:#91aac6;border-radius:20px;padding:7px 12px;font-size:10px}
+.filter.active{background:#0b4a8d;border-color:#1977c4;color:white}
+.mission-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.mission-card{border:1px solid #193653;background:#0a1929;border-radius:12px;padding:12px;display:flex;gap:10px;min-width:0}
+.mission-card.done{border-color:#17674e;background:#0a211e}
+.mission-card .m-icon{width:34px;height:34px;border-radius:10px;background:#102d48;display:grid;place-items:center;flex-shrink:0;font-size:16px}
+.mission-card h3{font-size:11px;margin:5px 0 7px;line-height:1.4}
+.mission-card .m-bottom{display:flex;align-items:center;justify-content:space-between;gap:5px;flex-wrap:wrap}
+.mission-card .xp{color:var(--gold);font-size:10px;font-weight:700}
+.status{font-size:9px;color:#8fa9c4;background:#12273c;border-radius:20px;padding:4px 7px}
+.status.done{color:#75edbd;background:#103a2d}
+.right-col .panel{padding:15px}
+.profile{display:flex;align-items:center;gap:12px}
+.avatar{width:49px;height:49px;border-radius:50%;border:2px solid #2689d6;background:linear-gradient(145deg,#16466e,#141d3a);display:grid;place-items:center;font-size:23px}
+.profile strong{font-size:13px}.profile small{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+.progress-ring{width:100px;height:100px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--cyan) var(--progress,0%),#1b3450 0);position:relative;flex-shrink:0}
+.progress-ring:before{content:"";position:absolute;inset:9px;background:#091727;border-radius:50%}
+.progress-ring strong{position:relative;font-size:20px}
+.progress-summary{display:flex;gap:15px;align-items:center}
+.progress-lines{flex:1;display:grid;gap:11px}
+.progress-line{font-size:10px;color:#b3c9e1}
+.progress-line .line-label{display:flex;justify-content:space-between;gap:8px;margin-bottom:5px}
+.progress-line .mini-progress{height:5px;background:#20364d;border-radius:9px;overflow:hidden}
+.progress-line .mini-progress span{display:block;height:100%;border-radius:9px;background:var(--accent,var(--blue))}
+.activity{display:grid;gap:11px}
+.activity-item{display:flex;gap:10px;align-items:flex-start;border-bottom:1px solid #142b42;padding-bottom:10px}
+.activity-item:last-child{border:0;padding-bottom:0}
+.activity-icon{width:30px;height:30px;border-radius:9px;background:#103c31;display:grid;place-items:center}
+.activity-item strong{font-size:10px;display:block;line-height:1.4}
+.activity-item small{font-size:9px;color:var(--muted);display:block;margin-top:4px}
+.activity-item .time{margin-left:auto;color:#7894b2;font-size:9px;white-space:nowrap}
+.word-card{background:#0b1f35;border:1px solid #20486a;border-radius:12px;padding:13px}
+.word-card .word{font-size:15px;font-weight:800}
+.word-card .phonetic{color:#91aac6;font-size:10px;margin-top:5px}
+.word-card .meaning{font-size:11px;line-height:1.6;color:#c4d7eb;margin-top:9px}
+.word-actions{display:flex;gap:7px;margin-top:12px}
+.word-actions button{flex:1}
+.footer{color:#6583a3;font-size:10px;display:flex;justify-content:space-between;padding:10px 3px}
+.page{display:none}.page.active{display:block}
+.page-title{font-size:23px;margin:5px 0 7px}.page-intro{color:var(--muted);font-size:12px;line-height:1.6;margin:0 0 18px}
+.section-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.project-card,.vocab-card,.road-detail{border:1px solid var(--line);background:#0a1929;border-radius:13px;padding:15px}
+.project-card h3{font-size:13px;line-height:1.5;margin:9px 0}
+.project-card p{font-size:11px;color:var(--muted);line-height:1.6}
+.project-card ul{padding-left:17px;color:#b6cce4;font-size:10px;line-height:1.8}
+.project-card .project-footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.vocab-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.vocab-card .term{font-size:14px;font-weight:800}
+.vocab-card .pron{color:#7797b8;font-size:10px;margin:5px 0}
+.vocab-card .definition{font-size:11px;color:#b9cde3;line-height:1.5;min-height:50px}
+.vocab-card .example{font-size:10px;color:#7fabc7;font-style:italic;margin-top:7px}
+.vocab-card .vocab-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.quiz-box{max-width:650px;margin:auto;border:1px solid #1b4163;background:#0a1929;border-radius:16px;padding:24px}
+.quiz-question{font-size:18px;line-height:1.5;margin:12px 0 20px}
+.quiz-options{display:grid;gap:9px}
+.quiz-option{background:#0d2035;border:1px solid #214360;color:#c8dcf1;padding:12px;border-radius:10px;text-align:left}
+.quiz-option:hover{border-color:var(--blue)}
+.quiz-option.correct{border-color:var(--green);background:#103729}.quiz-option.wrong{border-color:var(--red);background:#3a1a2a}
+.modal-backdrop{position:fixed;inset:0;background:#02060bd9;z-index:50;display:none;align-items:center;justify-content:center;padding:18px}
+.modal-backdrop.open{display:flex}
+.modal{width:min(760px,100%);max-height:90vh;overflow:auto;background:#091727;border:1px solid #245078;border-radius:18px;box-shadow:0 25px 80px #0009}
+.modal-head{padding:19px 22px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:15px;align-items:flex-start}
+.modal-head h2{font-size:18px;margin:7px 0}.modal-body{padding:22px}
+.modal-body h3{font-size:13px;color:var(--cyan);margin:20px 0 8px}.modal-body p,.modal-body li{font-size:12px;color:#b5c9df;line-height:1.8}
+.modal-body ul,.modal-body ol{padding-left:20px}
+.checklist{display:grid;gap:9px;margin:12px 0}
+.check-row{display:flex;gap:10px;align-items:flex-start;padding:10px;border:1px solid #1a3651;background:#0b1d30;border-radius:9px;font-size:11px;color:#c4d8ed}
+.check-row input{accent-color:var(--cyan);margin-top:2px}
+.modal-foot{padding:15px 22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.toast{position:fixed;right:22px;bottom:22px;background:#10352e;border:1px solid #218a68;color:#b8ffe2;padding:13px 17px;border-radius:12px;box-shadow:var(--shadow);z-index:100;opacity:0;transform:translateY(12px);transition:.25s;pointer-events:none;font-size:12px}
+.toast.show{opacity:1;transform:translateY(0)}
+.empty{text-align:center;color:var(--muted);padding:30px;font-size:12px}
+.settings-row{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--line);padding:13px 0;font-size:12px}
+.settings-row:last-child{border:0}
+input[type=text],input[type=number],select{background:#0a1b2d;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px}
+@media(max-width:1150px){.grid-main{grid-template-columns:minmax(0,1fr)}.right-col{grid-template-columns:repeat(2,minmax(0,1fr))}.right-col .panel:last-child{grid-column:span 2}.roadmap{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:800px){.app{grid-template-columns:1fr}.sidebar{position:sticky;height:auto;padding:10px 12px;border-right:0;border-bottom:1px solid var(--line)}.brand{padding:0 4px 10px}.brand-mark{width:33px;height:35px;font-size:18px}.brand strong{font-size:14px}.brand small{display:none}.nav{display:flex;overflow-x:auto;gap:5px}.nav button{white-space:nowrap;padding:9px 11px;font-size:11px}.nav .ico{font-size:14px}.sidebar-bottom{display:none}.main{padding:14px}.right-col{grid-template-columns:1fr 1fr}.right-col .panel:last-child{grid-column:span 2}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-content{max-width:100%}.hero:after{opacity:.25}.feature-mission{grid-template-columns:40px minmax(0,1fr)}.feature-mission .btn{grid-column:2;justify-self:start}.mission-list{grid-template-columns:1fr}.section-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.vocab-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.main{padding:10px}.topbar{margin-bottom:12px}.top-actions .icon-btn:nth-child(1){display:none}.hero{padding:18px;min-height:170px}.hero h1{font-size:23px}.hero p{font-size:11px}.stats-grid{gap:7px}.stat{padding:11px}.stat strong{font-size:17px}.panel{padding:12px}.roadmap{grid-template-columns:repeat(2,minmax(0,1fr))}.road-card{min-height:120px}.right-col{grid-template-columns:1fr}.right-col .panel:last-child{grid-column:auto}.section-grid,.vocab-grid{grid-template-columns:1fr}.progress-summary{gap:10px}.progress-ring{width:80px;height:80px}.feature-mission{padding:12px;gap:9px}.meta-row{gap:7px}.footer{flex-direction:column;gap:5px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-mark">⌁</div><div><strong>Son's Journey</strong><small>SOC Analyst Learning Path</small></div></div>
+    <nav class="nav" id="nav">
+      <button class="active" data-page="home"><span class="ico">⌂</span>Trang chủ</button>
+      <button data-page="missions"><span class="ico">☑</span>Nhiệm vụ hôm nay</button>
+      <button data-page="roadmap"><span class="ico">⌘</span>Lộ trình học</button>
+      <button data-page="projects"><span class="ico">▣</span>Projects</button>
+      <button data-page="vocab"><span class="ico">▤</span>Từ điển thuật ngữ</button>
+      <button data-page="english"><span class="ico">文</span>Tiếng Anh chuyên ngành</button>
+      <button data-page="stats"><span class="ico">▥</span>Thống kê</button>
+      <button data-page="profile"><span class="ico">♙</span>Hồ sơ cá nhân</button>
+    </nav>
+    <div class="sidebar-bottom"><div class="quote">“Không có con đường nào là dễ dàng, nhưng mỗi bước đi đều đưa bạn đến gần hơn với mục tiêu.”</div><div>— Keep Going —</div><br><div>Version 1.0 · Local progress</div></div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="search-wrap"><span>⌕</span><input id="globalSearch" type="text" placeholder="Tìm kiếm nhiệm vụ, kỹ năng, thuật ngữ..." aria-label="Tìm kiếm"></div>
+      <div class="top-actions"><button class="icon-btn" id="exportBtn" title="Xuất dữ liệu">⇩</button><button class="icon-btn" id="themeBtn" title="Đổi giao diện">☾</button></div>
+    </header>
+
+    <div class="page active" id="page-home">
+      <div class="grid-main">
+        <div class="content-col">
+          <section class="hero">
+            <div class="hero-content">
+              <div class="eyebrow">Your cybersecurity adventure</div>
+              <h1>Chào mừng trở lại, <span id="heroName">Xuân Sơn</span>!</h1>
+              <p>Học hôm nay, vững tương lai. Từng nhiệm vụ nhỏ đưa bạn đến gần hơn với mục tiêu trở thành SOC Analyst.</p>
+              <div class="hero-bottom"><span class="level-pill" id="levelPill">Lv. 1 · Novice</span><div class="xpbar"><span id="heroXpBar" style="width:0%"></span></div><span class="xp-label" id="heroXpLabel">0 / 500 XP</span></div>
+            </div>
+          </section>
+          <section class="stats-grid" id="statsGrid"></section>
+          <section class="panel">
+            <div class="panel-head"><h2>🎯 Nhiệm vụ hôm nay</h2><span class="sub" id="todayLabel"></span></div>
+            <div id="dailyMission"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h2>🧭 Lộ trình học tập</h2><button class="text-btn" data-goto="roadmap">Xem chi tiết →</button></div>
+            <div class="roadmap" id="roadmapPreview"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h2>⚡ Nhiệm vụ tiếp theo</h2><button class="text-btn" data-goto="missions">Tất cả nhiệm vụ →</button></div>
+            <div class="mission-list" id="nextMissions"></div>
+          </section>
+        </div>
+        <aside class="right-col">
+          <section class="panel">
+            <div class="panel-head"><h2>👤 Hồ sơ người học</h2><button class="text-btn" data-goto="profile">Sửa</button></div>
+            <div class="profile"><div class="avatar">🧑‍💻</div><div><strong id="profileName">Xuân Sơn</strong><small id="profileTitle">SOC Analyst in Progress</small><small id="profileLevel">Level 1 · Novice</small></div></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h2>📈 Tiến độ tổng thể</h2></div>
+            <div class="progress-summary"><div class="progress-ring" id="progressRing"><strong id="overallPct">0%</strong></div><div class="progress-lines" id="categoryProgress"></div></div>
+            <div style="margin-top:15px;border-top:1px solid var(--line);padding-top:12px;font-size:11px;color:var(--muted)">Hoàn thành <strong id="completedCount" style="color:var(--text)">0</strong> / <span id="totalCount">0</span> nhiệm vụ</div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h2>🕒 Hoạt động gần đây</h2></div><div class="activity" id="activityList"></div>
+          </section>
+          <section class="panel">
+            <div class="panel-head"><h2>🇬🇧 Từ vựng hôm nay</h2><button class="text-btn" data-goto="vocab">Tất cả →</button></div>
+            <div class="word-card" id="dailyWord"></div>
+          </section>
+        </aside>
+      </div>
+    </div>
+
+    <section class="page" id="page-missions">
+      <h1 class="page-title">🎯 Nhiệm vụ học tập</h1><p class="page-intro">Chọn nhiệm vụ, học theo từng bước, hoàn thành checklist và nhận XP. Hãy ưu tiên nhiệm vụ đang mở khóa theo lộ trình.</p>
+      <div class="panel">
+        <div class="mission-toolbar"><button class="filter active" data-filter="all">Tất cả</button><button class="filter" data-filter="todo">Chưa hoàn thành</button><button class="filter" data-filter="doing">Đang học</button><button class="filter" data-filter="done">Đã hoàn thành</button><select id="categoryFilter"><option value="all">Tất cả chủ đề</option></select><input id="missionSearch" type="text" placeholder="Tìm nhiệm vụ..." style="min-width:140px;flex:1"></div>
+        <div class="mission-list" id="allMissions"></div>
+      </div>
+    </section>
+
+    <section class="page" id="page-roadmap">
+      <h1 class="page-title">🧭 Lộ trình trở thành SOC Analyst</h1><p class="page-intro">Lộ trình được chia thành các chặng từ nền tảng đến dự án portfolio. Hoàn thành nhiệm vụ trong từng chặng để theo dõi tiến độ của bạn.</p>
+      <div class="section-grid" id="roadmapDetails"></div>
+    </section>
+
+    <section class="page" id="page-projects">
+      <h1 class="page-title">🧪 Project Lab</h1><p class="page-intro">Xây dựng portfolio bằng các dự án có đầu ra rõ ràng: log, timeline, detection rules, báo cáo và README trên GitHub. Chỉ thực hành trên hệ thống bạn sở hữu hoặc được cho phép.</p>
+      <div class="section-grid" id="projectList"></div>
+    </section>
+
+    <section class="page" id="page-vocab">
+      <h1 class="page-title">📖 Từ điển thuật ngữ</h1><p class="page-intro">Học thuật ngữ bảo mật theo chủ đề. Đánh dấu “Đã nhớ” để theo dõi vốn từ và luyện tập bằng flashcard.</p>
+      <div class="mission-toolbar"><input id="vocabSearch" type="text" placeholder="Tìm từ tiếng Anh hoặc nghĩa tiếng Việt..." style="flex:1"><select id="vocabTopic"><option value="all">Tất cả chủ đề</option></select><button class="btn secondary" id="quizStart">🧠 Luyện tập</button></div>
+      <div class="vocab-grid" id="vocabList"></div>
+    </section>
+
+    <section class="page" id="page-english">
+      <h1 class="page-title">🇬🇧 English for Cybersecurity</h1><p class="page-intro">Lộ trình tiếng Anh chuyên ngành tập trung vào đọc tài liệu, hiểu alert, viết báo cáo và giao tiếp trong SOC.</p>
+      <div class="section-grid" id="englishRoadmap"></div>
+      <div class="panel" style="margin-top:15px"><div class="panel-head"><h2>🗣️ Bài luyện tập nhanh</h2></div><div id="englishExercise"></div></div>
+    </section>
+
+    <section class="page" id="page-stats">
+      <h1 class="page-title">📊 Thống kê hành trình</h1><p class="page-intro">Theo dõi XP, nhiệm vụ đã hoàn thành, kỹ năng đã học và chuỗi ngày học của bạn.</p>
+      <div class="stats-grid" id="statsDetail"></div>
+      <div class="panel" style="margin-top:15px"><div class="panel-head"><h2>📚 Tiến độ theo chặng</h2></div><div id="statsCategories"></div></div>
+      <div class="panel" style="margin-top:15px"><div class="panel-head"><h2>🏅 Huy hiệu</h2></div><div class="section-grid" id="badges"></div></div>
+    </section>
+
+    <section class="page" id="page-profile">
+      <h1 class="page-title">⚙️ Hồ sơ & cài đặt</h1><p class="page-intro">Tùy chỉnh hành trình học tập và quản lý dữ liệu được lưu trên trình duyệt này.</p>
+      <div class="panel">
+        <div class="settings-row"><label for="nameInput">Tên hiển thị</label><input id="nameInput" type="text" maxlength="40" placeholder="Tên của bạn"></div>
+        <div class="settings-row"><label for="goalInput">Mục tiêu nghề nghiệp</label><select id="goalInput"><option>SOC Analyst</option><option>DFIR Analyst</option><option>Digital Forensics Investigator</option><option>Detection Engineer</option><option>Malware Analyst</option></select></div>
+        <div class="settings-row"><label>Xuất dữ liệu tiến độ</label><button class="btn secondary small" id="exportBtn2">Tải JSON</button></div>
+        <div class="settings-row"><label>Nhập dữ liệu đã sao lưu</label><input type="file" id="importFile" accept=".json,application/json"></div>
+        <div class="settings-row"><label>Đặt lại toàn bộ tiến độ</label><button class="btn small" style="background:#451b2b;border-color:#8a2b4a" id="resetBtn">Reset dữ liệu</button></div>
+        <p style="color:var(--muted);font-size:10px;line-height:1.7">Dữ liệu được lưu trong LocalStorage của trình duyệt. Hãy xuất file JSON định kỳ nếu bạn muốn sao lưu hoặc chuyển sang thiết bị khác.</p>
+      </div>
+    </section>
+
+    <footer class="footer"><span>Son's Journey · Your path to become a SOC Analyst</span><span>Security · Forensics · Intelligence · Future</span></footer>
+  </main>
+</div>
+
+<div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modal"><div class="modal-head"><div><span class="tag" id="modalTag">MISSION</span><h2 id="modalTitle">Tên nhiệm vụ</h2><div class="sub" id="modalMeta"></div></div><button class="icon-btn" id="modalClose" aria-label="Đóng">✕</button></div><div class="modal-body" id="modalBody"></div><div class="modal-foot"><span id="modalReward" style="color:var(--gold);font-size:12px;font-weight:700"></span><div style="display:flex;gap:8px"><button class="btn secondary" id="saveProgressBtn">Lưu tiến độ</button><button class="btn" id="completeMissionBtn">Hoàn thành & nhận XP</button></div></div></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const curriculum = [
+ {id:"foundation",name:"Kiến thức nền",icon:"🧱",color:"#35d49a",desc:"Hệ điều hành, mạng máy tính, Linux, Windows và scripting.",skills:["Windows & Linux","Mạng máy tính","PowerShell/Bash","Python cơ bản","Cơ bản về bảo mật"],missions:[
+  ["cyber-basics","Giới thiệu Cybersecurity",30,"Hiểu CIA Triad, threat, vulnerability, risk và các vai trò trong an ninh mạng.","Đọc về CIA Triad và phân biệt threat, vulnerability, risk.","Viết 5 ví dụ về tài sản, mối đe dọa và rủi ro.","Tóm tắt một incident nổi tiếng bằng 5 câu."],
+  ["network-basics","Mạng máy tính cơ bản",40,"Nắm TCP/IP, OSI, subnet, port và luồng giao tiếp.","Ôn OSI và TCP/IP; ghi lại vai trò từng tầng.","Tìm hiểu DNS, DHCP, ARP, TCP handshake.","Dùng Wireshark bắt một DNS query và mô tả luồng."],
+  ["windows-basics","Windows Internals cơ bản",40,"Hiểu process, service, registry, file system và Event Viewer.","Tìm hiểu process, parent process và Windows Services.","Mở Event Viewer, tìm System và Security logs.","Ghi chú 5 Event ID thường gặp."],
+  ["linux-basics","Linux cơ bản cho SOC",35,"Làm quen terminal, permissions, process và system logs.","Thực hành pwd, ls, cd, cat, grep, find.","Tìm hiểu ps, top, ss, journalctl.","Viết 5 lệnh hữu ích và ví dụ sử dụng."],
+  ["powershell","PowerShell cơ bản",45,"Dùng PowerShell để truy vấn hệ thống và tự động hóa tác vụ nhỏ.","Học Get-Help, Get-Process, Get-Service.","Lọc kết quả với Where-Object và Select-Object.","Viết script liệt kê process/service và xuất CSV."],
+  ["python-basics","Python cho phân tích bảo mật",50,"Đọc file, xử lý chuỗi, JSON, CSV và tự động hóa.","Ôn biến, list, dict, vòng lặp, hàm.","Đọc file log và lọc các dòng theo từ khóa.","Tạo script đếm IP xuất hiện nhiều nhất."],
+  ["security-logs","Làm quen Security Logs",40,"Hiểu log là gì, log source, timestamp, severity và event fields.","Đọc một mẫu Windows Event Log.","Phân biệt event, alert, incident.","Viết bảng log source và câu hỏi có thể trả lời."],
+  ["git-github","Git & GitHub cho portfolio",30,"Quản lý phiên bản, README và trình bày dự án.","Tạo repository và README.","Commit file notes hoặc script mẫu.","Viết README gồm mục tiêu, lab, công cụ, kết quả."]
+ ]},
+ {id:"forensics",name:"Forensics",icon:"🔎",color:"#a878ff",desc:"Disk, Windows artifacts, memory, network và timeline analysis.",skills:["Digital Forensics","Disk Forensics","Windows Artifacts","Memory Forensics","Network Forensics"],missions:[
+  ["forensics-intro","Giới thiệu Digital Forensics",35,"Hiểu quy trình thu thập, bảo toàn, phân tích và báo cáo bằng chứng số.","Tìm hiểu forensic process và evidence types.","Học hashing, integrity và chain of custody.","Viết mẫu evidence log cho một file lab."],
+  ["imaging-hashing","Forensic Imaging & Hashing",45,"Tạo bản sao điều tra và xác minh tính toàn vẹn dữ liệu.","Tìm hiểu write blocker và forensic image formats.","Dùng FTK Imager với image mẫu hoặc ổ lab được phép.","Tính SHA-256 trước/sau và ghi vào evidence log."],
+  ["autopsy","Phân tích ổ đĩa với Autopsy",60,"Điều tra image bằng Autopsy và tìm artifacts quan trọng.","Cài Autopsy và nạp image thực hành hợp pháp.","Khám phá file system, deleted files, metadata.","Xuất 5 findings có bằng chứng và timestamp."],
+  ["registry","Windows Registry Forensics",55,"Phân tích Registry hives và tìm dấu vết cấu hình/persistence.","Tìm hiểu HKLM, HKCU, SAM, SYSTEM, SOFTWARE.","Dùng Registry Explorer xem hive mẫu.","Ghi lại một artifact, đường dẫn key và ý nghĩa."],
+  ["ntfs","NTFS, MFT & USN Journal",55,"Hiểu metadata file, timestamps, MFT và journal.","Tìm hiểu MFT record và timestamp caveats.","Đọc tài liệu về USN Journal.","Viết ghi chú cách các artifact hỗ trợ timeline."],
+  ["windows-artifacts","Windows Forensic Artifacts",60,"Phân tích Prefetch, LNK, Jump Lists, Amcache và event logs.","Tìm hiểu từng artifact và giới hạn chứng cứ.","Phân tích bộ artifact mẫu.","Lập bảng artifact → câu hỏi điều tra → bằng chứng."],
+  ["timeline","Timeline Reconstruction",50,"Tương quan nhiều nguồn để dựng chuỗi sự kiện.","Ôn timestamp, timezone và time normalization.","Dùng Plaso/log2timeline với dữ liệu mẫu.","Tạo timeline CSV có source và confidence."],
+  ["volatility","Memory Forensics với Volatility 3",70,"Phân tích memory image để tìm process, network và dấu hiệu bất thường.","Tìm hiểu acquisition và symbol basics.","Chạy các plugin info, pslist, pstree, netscan trên image mẫu.","Viết báo cáo process/network findings và hạn chế."],
+  ["network-forensics","Network Forensics với Wireshark",55,"Phân tích PCAP, DNS, HTTP, TLS và luồng kết nối.","Ôn display filters và TCP stream.","Phân tích PCAP thực hành an toàn.","Trích xuất IOC và ghi rõ evidence packet/time."],
+  ["chain-custody","Chain of Custody & Báo cáo",35,"Tài liệu hóa quá trình xử lý bằng chứng có thể kiểm chứng.","Đọc mẫu chain-of-custody form.","Ghi người xử lý, thời gian, hash và thao tác.","Hoàn thiện báo cáo forensic ngắn."]
+ ]},
+ {id:"soc",name:"SOC & Incident Response",icon:"🛡️",color:"#28a5ff",desc:"SIEM, alert triage, log analysis, ATT&CK và incident handling.",skills:["Splunk & SPL","Sysmon & Logs","Sigma Rules","Alert Triage","Incident Response"],missions:[
+  ["soc-intro","SOC Analyst làm gì?",30,"Hiểu SOC tiers, alert lifecycle, escalation và KPI.","Tìm hiểu L1/L2/L3 và nhiệm vụ từng cấp.","Đọc mẫu alert và phân loại severity.","Viết checklist triage 8 câu hỏi."],
+  ["sysmon","Cài đặt & cấu hình Sysmon",55,"Thu thập telemetry Windows có ích cho điều tra.","Tìm hiểu Sysmon Event IDs 1, 3, 7, 11, 13, 22.","Cài Sysmon trong VM lab và cấu hình phù hợp.","Tạo bảng event ID → dữ liệu → use case."],
+  ["splunk-intro","Splunk cơ bản & dữ liệu log",60,"Tìm kiếm, lọc và thống kê log bằng Splunk.","Tìm hiểu index, sourcetype, fields và time picker.","Thực hành search, stats, table, sort.","Lưu 5 truy vấn SPL có mô tả."],
+  ["splunk-alerts","Xây dựng Splunk Alerts",60,"Tạo alert dựa trên ngưỡng và điều kiện phát hiện.","Ôn SPL filtering và aggregation.","Tạo alert cho failed logon trong dữ liệu lab.","Ghi false positive considerations và response."],
+  ["sigma","Viết Sigma Detection Rules",55,"Mô tả phát hiện log theo định dạng Sigma.","Đọc cấu trúc title, logsource, detection, condition.","Viết rule cho hành vi process đáng ngờ trong log mẫu.","Kiểm thử rule và ghi test cases."],
+  ["mitre","MITRE ATT&CK Mapping",45,"Ánh xạ bằng chứng sang tactics/techniques phù hợp.","Tìm hiểu tactic vs technique vs procedure.","Chọn technique từ một incident lab.","Tạo bảng technique, evidence, confidence."],
+  ["triage","Alert Triage & Investigation",60,"Điều tra alert từ nhận định ban đầu đến kết luận.","Xác định source, entity, timestamp, severity.","Pivot qua process, user, host, network logs.","Viết triage note: verdict, evidence, next action."],
+  ["incident-response","Incident Response Lifecycle",60,"Thực hành preparation, identification, containment, eradication, recovery.","Đọc quy trình IR và vai trò.","Lập playbook cho máy Windows nghi nhiễm.","Viết incident report và lessons learned."],
+  ["correlation","Correlation & Timeline",60,"Kết hợp nhiều sự kiện để tăng độ tin cậy phát hiện.","Tìm hiểu time windows và event correlation.","Tạo chuỗi process + network từ log lab.","Viết truy vấn/rule và mô tả logic."],
+  ["soc-report","Viết báo cáo SOC chuyên nghiệp",40,"Trình bày phát hiện, tác động, bằng chứng và khuyến nghị.","Xem mẫu incident report.","Tóm tắt một alert thành executive summary.","Hoàn thiện báo cáo có timeline và remediation."]
+ ]},
+ {id:"malware",name:"Malware Analysis",icon:"🧬",color:"#ffad52",desc:"Static/dynamic analysis, PE, debugging, reverse engineering.",skills:["Static Analysis","Dynamic Analysis","PE Analysis","Reverse Engineering","IOC & ATT&CK"],missions:[
+  ["malware-safe","Malware Lab Safety",35,"Thiết lập môi trường cô lập và quy tắc an toàn khi phân tích mẫu.","Tìm hiểu snapshots, host-only networking và containment.","Thiết kế lab không bridge ra mạng thật.","Viết checklist an toàn trước/sau phân tích."],
+  ["hash-strings","Hash, Strings & Basic Triage",40,"Thu thập hash, strings, metadata và nhận diện file.","Tìm hiểu SHA-256, file signatures, strings.","Phân tích file benign/sample lab được phép.","Ghi triage sheet: hash, type, strings, hypotheses."],
+  ["pe-analysis","PE File Analysis",55,"Hiểu DOS/NT headers, sections, imports, exports.","Ôn PE format và section permissions.","Dùng PEStudio hoặc công cụ tương đương trên mẫu an toàn.","Ghi dấu hiệu đáng chú ý và caveats."],
+  ["static-analysis","Static Analysis với Ghidra",70,"Đọc pseudocode, strings, imports và control flow.","Làm quen Ghidra project và function graph.","Phân tích chương trình mẫu benign hoặc training sample.","Viết mô tả function và hành vi dự đoán."],
+  ["dynamic-analysis","Dynamic Analysis với Procmon",60,"Quan sát file, registry, process và network behavior.","Làm quen filters và backing files.","Chạy chương trình training trong VM snapshot.","So sánh trạng thái trước/sau và xuất findings."],
+  ["debugging","Debugging cơ bản với x64dbg",70,"Đọc registers, stack, memory và breakpoint.","Tìm hiểu debugger interface và calling conventions.","Debug một chương trình training benign.","Ghi call flow và observations."],
+  ["ioc","IOC Extraction & Enrichment",45,"Tạo IOC list và bổ sung context từ nguồn tin cậy.","Phân biệt hash, IP, domain, URL, mutex, path.","Tra cứu IOC lab trên nguồn phù hợp.","Ghi confidence, source, date và false-positive risk."]
+ ]},
+ {id:"english",name:"Tiếng Anh chuyên ngành",icon:"🇬🇧",color:"#ff5ebc",desc:"Vocabulary, reading alerts, technical writing và interview English.",skills:["Security Vocabulary","Reading","Listening","Technical Writing","Interview English"],missions:[
+  ["english-core","25 từ vựng Security nền tảng",25,"Nắm các từ threat, vulnerability, exploit, incident, evidence và risk.","Học flashcards 25 từ trong bộ từ vựng.","Viết 5 câu sử dụng thuật ngữ.","Làm quiz và đánh dấu từ đã nhớ."],
+  ["english-logs","Đọc Windows/SIEM log bằng tiếng Anh",35,"Hiểu field names, alert titles và mô tả sự kiện.","Học process, parent process, source IP, destination port.","Đọc một mẫu alert tiếng Anh.","Tóm tắt alert bằng 3 câu tiếng Anh."],
+  ["english-report","Viết Incident Report bằng tiếng Anh",45,"Viết summary, impact, evidence, timeline và remediation.","Học cụm từ báo cáo trung tính.","Viết executive summary 100 từ.","Tự rà soát clarity và grammar."],
+  ["english-reading","Đọc tài liệu kỹ thuật",40,"Đọc docs, advisories và write-up có phương pháp.","Chọn tài liệu ngắn về một detection.","Ghi 10 thuật ngữ mới và ý chính.","Viết summary 5 câu."],
+  ["english-interview","Luyện phỏng vấn SOC bằng tiếng Anh",40,"Trình bày quy trình triage và project của mình.","Chuẩn bị câu trả lời Tell me about yourself.","Trả lời What would you do with a suspicious alert?","Ghi âm 1–2 phút và tự đánh giá."]
+ ]}
+
+ ,{id:"linux-cloud",name:"Linux & Cloud Security",icon:"☁️",color:"#55c7d9",desc:"Bảo vệ Linux, giám sát cloud và điều tra log từ AWS/Azure/GCP.",skills:["Linux hardening","systemd & journald","auditd","SSH security","AWS CloudTrail","Azure Monitor","Cloud IAM","Cloud incident triage"],missions:[
+ ["linux-logs-soc","Linux Logs cho SOC",45,"Đọc auth.log, syslog, journald và nhận diện hoạt động bất thường.","Ôn /var/log, rsyslog và journalctl.","Tìm log SSH thành công/thất bại trong lab.","Viết ghi chú nguồn log, timestamp, user, IP và kết luận."],
+ ["linux-auditd","Linux Auditd & Process Monitoring",55,"Thu thập sự kiện audit và theo dõi thay đổi quan trọng.","Tìm hiểu auditd, audit rules và syscall ở mức cơ bản.","Cấu hình rule trong VM lab để theo dõi file thử nghiệm.","Phân tích log audit và đề xuất detection."],
+ ["linux-hardening","Linux Security Hardening",50,"Áp dụng nguyên tắc least privilege, SSH hardening và cập nhật hệ thống.","Ôn users/groups, permissions, sudo và services.","Hardening một VM Linux cá nhân; giữ phương án rollback.","Tạo checklist trước/sau và giải thích từng thay đổi."],
+ ["cloud-logging","Cloud Logging Fundamentals",50,"Hiểu audit logs, identity, resource và control plane events.","Học CloudTrail, Azure Activity Logs và GCP Audit Logs ở mức khái niệm.","Dùng sandbox/free tier hoặc bộ log mẫu; không tạo tài nguyên tốn phí ngoài dự kiến.","Lập bảng event source → field → use case SOC."],
+ ["cloud-iam","Cloud IAM & Suspicious Access",55,"Điều tra đăng nhập bất thường, quyền quá mức và thay đổi IAM.","Ôn MFA, roles, policies, least privilege.","Phân tích tình huống giả lập tạo access key hoặc thay đổi role.","Viết detection hypothesis, evidence cần tìm và response."],
+ ["cloud-incident","Cloud Incident Triage",60,"Triage một cảnh báo cloud từ log đến containment đề xuất.","Ôn identity, API calls, resource changes và audit trail.","Điều tra bộ log cloud training.","Viết timeline, scope, confidence và khuyến nghị." ]
+ ]}
+ ,{id:"threat-intel",name:"Threat Intelligence",icon:"🛰️",color:"#e8a64b",desc:"Thu thập, xác thực và diễn giải IOC/TTP để hỗ trợ detection và điều tra.",skills:["IOC lifecycle","OSINT","VirusTotal","AbuseIPDB","MISP concepts","MITRE ATT&CK","TLP & confidence","Threat reports"],missions:[
+ ["ti-intro","Threat Intelligence Fundamentals",35,"Phân biệt strategic, operational, tactical và technical intelligence.","Học intelligence cycle và nguồn dữ liệu.","Đánh giá một threat report công khai.","Tóm tắt actor, mục tiêu, TTP và độ tin cậy."],
+ ["ioc-enrichment","IOC Collection & Enrichment",45,"Chuẩn hóa hash, domain, URL và IP; bổ sung context có nguồn.","Học IOC types, freshness, false positives và reputation caveats.","Enrich IOC lab bằng VirusTotal/AbuseIPDB hoặc dữ liệu giả lập.","Tạo bảng IOC, source, first-seen, confidence và action."],
+ ["mitre-ttp","MITRE ATT&CK TTP Mapping",45,"Ánh xạ hành vi quan sát được sang technique phù hợp, không suy diễn.","Phân biệt tactic, technique, sub-technique và procedure.","Map một incident lab từ evidence sang ATT&CK.","Viết mapping kèm evidence và confidence."],
+ ["intel-report","Threat Intelligence Report",50,"Viết intelligence note hữu ích cho SOC.","Ôn source evaluation, TLP và confidence.","Chọn một advisory và trích TTP/IOC đã xác minh.","Viết report ngắn gồm summary, detection ideas và limitations."],
+ ["intel-hunting","Intel-driven Threat Hunting",60,"Chuyển intel thành giả thuyết hunting và truy vấn log.","Từ TTP suy ra telemetry cần có.","Viết SPL/KQL hoặc truy vấn trên log lab.","Ghi kết quả, blind spots và tuning." ]
+ ]}
+ ,{id:"soc-operations",name:"SOC Operations & Ticketing",icon:"🎫",color:"#55d6a2",desc:"Quy trình Tier 1–3, ticket, escalation, SLA và báo cáo điều tra.",skills:["SOC Tier 1/2/3","Ticket lifecycle","Severity & priority","Jira concepts","ServiceNow concepts","Escalation","Incident report","Handover"],missions:[
+ ["soc-tiers","SOC Tier 1 / Tier 2 / Tier 3",30,"Hiểu trách nhiệm, quyền hạn và tiêu chí escalation của từng tier.","Đọc alert lifecycle và SOC operating model.","Phân loại 8 tình huống theo tier và lý do.","Tạo bảng escalation criteria."],
+ ["ticket-writing","Viết SOC Ticket chất lượng",40,"Ghi ticket rõ ràng, có evidence, impact, actions và next steps.","Học ticket fields: summary, severity, assignee, status, timestamps.","Viết ticket cho một alert lab.","Tự review theo checklist reproducibility và clarity."],
+ ["jira-servicenow","Jira & ServiceNow Workflow Concepts",35,"Hiểu cách ticket đi qua trạng thái và nhóm xử lý.","Tìm hiểu queues, assignment, comments, attachments và SLA.","Thiết kế workflow giả lập trên bảng hoặc bản dùng thử.","Vẽ flow New → Triage → Investigating → Escalated/Resolved."],
+ ["severity-sla","Severity, Priority & SLA",40,"Đánh giá urgency, impact, scope và thời hạn phản hồi.","Phân biệt severity với priority; đọc SLA mẫu.","Chấm điểm 6 tình huống giả lập.","Giải thích quyết định và ghi assumptions."],
+ ["handover-report","Shift Handover & Incident Report",45,"Bàn giao ca và viết báo cáo kỹ thuật có thể hành động.","Học executive summary, timeline, evidence, actions, owner.","Viết handover cho incident còn mở.","Hoàn thiện report và checklist thông tin chưa rõ." ]
+ ]}
+ ,{id:"automation",name:"SOAR & Security Automation",icon:"⚙️",color:"#b28cff",desc:"Dùng Python, Bash, PowerShell và API để giảm thao tác lặp trong SOC.",skills:["Python log parsing","Regex & JSON","REST APIs","PowerShell automation","Bash","IOC enrichment","SOAR playbooks","Safe automation"],missions:[
+ ["python-log-parser","Python Log Parser",45,"Đọc JSON/CSV/log text, lọc sự kiện và tạo output có cấu trúc.","Ôn file I/O, dictionaries, exceptions và argparse.","Viết parser cho log mẫu và lọc theo IP/event ID.","Thêm README, sample input/output và test cases."],
+ ["regex-ioc","Regex & IOC Extraction",40,"Trích xuất IP/domain/hash từ dữ liệu mẫu và tránh match sai.","Học regex cơ bản và validation.","Viết script trích IOC từ text/JSON.","Kiểm thử false matches và ghi limitations."],
+ ["rest-api","REST API & Enrichment",50,"Gọi API an toàn, xử lý JSON, rate limits và lỗi.","Ôn HTTP methods, status codes, headers và API keys.","Dùng API public hoặc mock API; không commit secrets.","Tạo tool enrich IOC có timeout, error handling và README."],
+ ["powershell-automation","PowerShell SOC Automation",45,"Tự động thu thập thông tin host/process/service trong lab.","Ôn pipeline, objects, filtering và export CSV/JSON.","Viết script inventory chỉ đọc trên VM cá nhân.","Ghi output mẫu và giải thích cách dùng."],
+ ["soar-playbook","SOAR Playbook Design",55,"Thiết kế workflow có bước kiểm tra, phê duyệt và audit trail.","Học trigger, enrichment, decision, action và rollback.","Thiết kế playbook phishing/IOC enrichment dạng sơ đồ.","Tài liệu hóa guardrails, approval và failure handling."],
+ ["automation-capstone","SOC Automation Capstone",70,"Kết hợp parsing, enrichment và báo cáo cho dữ liệu lab.","Ôn module Python, API và logging.","Xây tool xử lý alert mẫu end-to-end.","Viết tests, README, demo và limitations." ]
+ ]}
+
+];
+
+const projects = [
+ {id:"p1",title:"Windows Event Log Investigation",level:"Beginner",xp:100,category:"SOC & Incident Response",goal:"Điều tra một tình huống Windows đáng ngờ từ log và xây dựng timeline có bằng chứng.",tools:["Windows Event Viewer","Sysmon","PowerShell"],steps:["Tạo Windows VM snapshot và bật logging phù hợp.","Thu thập Event Logs và Sysmon logs từ lab.","Lọc các event liên quan đến process, logon và network.","Pivot theo host, user, process và timestamp.","Tạo timeline CSV, IOC list và báo cáo ngắn."],deliver:["README mô tả lab và scope","Timeline CSV có source","3–5 findings có evidence","Incident report và lessons learned"]},
+ {id:"p2",title:"Splunk + Sysmon SOC Home Lab",level:"Beginner → Intermediate",xp:150,category:"SOC & Incident Response",goal:"Xây dựng pipeline thu thập Windows telemetry và phát hiện hành vi đáng ngờ.",tools:["Splunk","Sysmon","Universal Forwarder","SPL"],steps:["Tạo VM Windows và Splunk instance trong lab.","Cài Sysmon và Universal Forwarder; xác minh dữ liệu đến Splunk.","Tạo dashboard tổng quan event/process/network.","Viết 3 SPL searches và 2 alerts với test data.","Tài liệu hóa kiến trúc, field mapping và false positives."],deliver:["Sơ đồ kiến trúc lab","SPL queries có chú thích","Detection test cases","Dashboard screenshots và README"]},
+ {id:"p3",title:"Disk Forensics Case Study",level:"Intermediate",xp:180,category:"Forensics",goal:"Phân tích forensic image hoặc bộ artifact thực hành để trả lời câu hỏi điều tra.",tools:["FTK Imager","Autopsy","Registry Explorer","Plaso"],steps:["Chọn forensic image training được phép sử dụng.","Ghi lại nguồn, hash và chain-of-custody.","Phân tích file system, Registry và Windows artifacts.","Dựng timeline và phân biệt facts với hypotheses.","Viết findings, confidence, limitations và conclusion."],deliver:["Evidence log + hashes","Artifact analysis table","Timeline","Forensic report"]},
+ {id:"p4",title:"Memory Forensics with Volatility 3",level:"Intermediate",xp:200,category:"Forensics",goal:"Phân tích memory image để xác định tiến trình hoặc kết nối đáng ngờ.",tools:["Volatility 3","Python","Windows memory image"],steps:["Lấy memory image từ nguồn training hợp pháp.","Xác minh image và ghi hash.","Thực hiện system/process enumeration.","Kiểm tra process tree, network artifacts và anomalies.","Viết báo cáo với evidence, confidence và limitations."],deliver:["Command log","Process tree","Findings table","Memory forensic report"]},
+ {id:"p5",title:"PCAP Network Forensics & Detection",level:"Intermediate",xp:160,category:"Forensics",goal:"Điều tra traffic mẫu và tạo detection logic cho hành vi mạng đáng ngờ.",tools:["Wireshark","NetworkMiner","Suricata","Zeek"],steps:["Chọn PCAP từ nguồn training an toàn.","Lập inventory protocols, endpoints và DNS.","Theo dõi TCP streams và xác định traffic bất thường.","Trích xuất IOC với packet/time evidence.","Viết Suricata rule lab và kiểm thử trên traffic mẫu."],deliver:["PCAP notes","IOC table","Suricata rule + test","Network investigation report"]},
+ {id:"p6",title:"Sigma Detection Engineering Pack",level:"Intermediate",xp:170,category:"SOC & Incident Response",goal:"Tạo bộ detection rules có logic, test cases và hướng dẫn triển khai.",tools:["Sigma","Splunk SPL","MITRE ATT&CK"],steps:["Chọn 3 hành vi có log source phù hợp.","Viết Sigma rules có title, logsource, detection, condition.","Ánh xạ ATT&CK khi có bằng chứng phù hợp.","Chuyển đổi/viết SPL tương đương và test với dữ liệu lab.","Tài liệu hóa false positives, tuning và response."],deliver:["3 Sigma rules","SPL equivalents","Test data/results","Rule documentation"]},
+ {id:"p7",title:"Incident Response Tabletop",level:"Beginner → Intermediate",xp:120,category:"SOC & Incident Response",goal:"Thực hành xử lý sự cố theo một kịch bản giả lập và tạo báo cáo chuyên nghiệp.",tools:["Incident playbook","MITRE ATT&CK","Evidence worksheet"],steps:["Chọn kịch bản phishing hoặc suspicious PowerShell trong lab.","Xác định scope, assets, severity và evidence needed.","Tạo timeline và IOC list.","Đề xuất containment, eradication, recovery.","Viết executive summary, technical findings và lessons learned."],deliver:["Incident timeline","Decision log","Response plan","Final report"]},
+ {id:"p8",title:"Malware Static & Dynamic Analysis",level:"Advanced",xp:250,category:"Malware Analysis",goal:"Phân tích training sample trong môi trường cô lập và mô tả hành vi.",tools:["PEStudio","Ghidra","Procmon","Regshot","x64dbg"],steps:["Thiết lập snapshot và network isolation; dùng sample training được phép.","Ghi hash, file type, metadata và strings.","Thực hiện static analysis, ghi hypotheses.","Quan sát dynamic behavior trong lab an toàn.","Tổng hợp IOC, ATT&CK mapping và behavioral report."],deliver:["Safety checklist","Static/dynamic notes","IOC list","Malware analysis report"]},
+ {id:"p9",title:"SOC Analyst Portfolio Website",level:"Beginner",xp:100,category:"Projects",goal:"Trình bày projects, write-ups, skills và learning progress trên GitHub Pages.",tools:["HTML/CSS/JS","GitHub","Markdown"],steps:["Tạo repository và trang portfolio.","Viết profile summary và skill matrix trung thực.","Thêm 3 project write-ups có ảnh/sơ đồ.","Thêm detection rules và report samples đã làm sạch dữ liệu.","Kiểm tra responsive, links và không đưa secrets/PII lên GitHub."],deliver:["GitHub Pages site","3 project pages","README","Checklist privacy/security"]},
+ {id:"p10",title:"English SOC Incident Report",level:"Beginner → Intermediate",xp:90,category:"English",goal:"Viết báo cáo sự cố bằng tiếng Anh rõ ràng, trung tính và có bằng chứng.",tools:["Security vocabulary","Report template","Grammar checklist"],steps:["Chọn incident lab đã hoàn thành.","Viết executive summary 80–120 words.","Viết timeline, evidence, impact và remediation.","Dùng terminology nhất quán, tránh khẳng định vượt bằng chứng.","Tự review và lưu bản final trong portfolio."],deliver:["English incident report","Vocabulary list","Self-review checklist"]}
+
+ ,{id:"p11",title:"Linux SOC Monitoring & Hardening Lab",level:"Beginner → Intermediate",xp:160,category:"Linux & Cloud Security",goal:"Thiết lập Linux VM, thu thập logs và tạo checklist hardening có thể kiểm chứng.",tools:["Ubuntu/Linux VM","journald","auditd","SSH","Bash"],steps:["Tạo VM snapshot và ghi cấu hình ban đầu.","Thu thập auth/system logs và xác định log locations.","Thực hành phát hiện failed SSH logons trong dữ liệu lab.","Áp dụng least privilege và SSH hardening an toàn.","Viết detection notes, hardening checklist và README."],deliver:["Lab architecture","Log samples đã làm sạch","Detection notes","Hardening checklist + README"]},
+ {id:"p12",title:"Cloud Audit Log Investigation",level:"Intermediate",xp:190,category:"Linux & Cloud Security",goal:"Điều tra hoạt động identity/API đáng ngờ từ cloud audit log mẫu.",tools:["AWS CloudTrail hoặc Azure/GCP audit logs","JSON","Python/Splunk"],steps:["Dùng dataset training hoặc sandbox được kiểm soát.","Chuẩn hóa timestamps, identity, source IP và API action.","Tìm login anomalies, privilege changes và resource modifications.","Dựng timeline và đánh giá impact/scope.","Viết incident report và detection recommendations."],deliver:["Parsed log table","Timeline","Detection query","Cloud incident report"]},
+ {id:"p13",title:"Threat Intelligence IOC Enrichment Tool",level:"Beginner → Intermediate",xp:180,category:"Threat Intelligence",goal:"Xây công cụ enrich IOC với nguồn, confidence và xử lý lỗi rõ ràng.",tools:["Python","REST API","JSON/CSV","VirusTotal hoặc mock API"],steps:["Tạo input IOC sample không nhạy cảm.","Viết validator và chuẩn hóa IOC.","Gọi API hoặc mock endpoint; bảo vệ API key bằng environment variables.","Thêm timeout, rate-limit handling và cache cơ bản.","Xuất report có nguồn, timestamp và caveats."],deliver:["Python tool","Sample input/output","Tests","README + limitations"]},
+ {id:"p14",title:"SOC Ticketing & Incident Workflow",level:"Beginner",xp:130,category:"SOC Operations & Ticketing",goal:"Mô phỏng quy trình alert-to-ticket-to-escalation với evidence và SLA.",tools:["Jira/ServiceNow concepts","Incident template","MITRE ATT&CK"],steps:["Chọn 3 alert lab với severity khác nhau.","Tạo ticket summary, evidence, scope, owner và next action.","Thiết kế workflow states và escalation criteria.","Viết shift handover cho một incident còn mở.","Tạo final incident report và lessons learned."],deliver:["3 sample tickets","Workflow diagram","Handover note","Incident report"]},
+ {id:"p15",title:"SOC Automation Mini-SOAR",level:"Intermediate",xp:220,category:"SOAR & Security Automation",goal:"Tự động parse alert, enrich IOC và tạo analyst-ready summary trong lab.",tools:["Python","REST API/mock API","JSON","GitHub"],steps:["Thiết kế input schema cho alert giả lập.","Parse và validate fields; xử lý dữ liệu thiếu.","Enrich IOC qua API/mock và ghi nguồn.","Tạo summary, severity recommendation và analyst approval step.","Viết tests, README, diagram và safety guardrails."],deliver:["Source code","Unit tests","Workflow diagram","Demo output + README"]},
+ {id:"p16",title:"Threat Intelligence to Detection Pack",level:"Intermediate",xp:190,category:"Threat Intelligence",goal:"Chuyển TTP/IOC đã xác minh thành detection logic và tài liệu SOC.",tools:["MITRE ATT&CK","Sigma","Splunk SPL","Threat reports"],steps:["Chọn advisory/report công khai có nguồn đáng tin.","Trích TTP/IOC và đánh giá confidence/freshness.","Xác định telemetry cần có và viết detection hypothesis.","Tạo Sigma rule hoặc SPL trên dữ liệu lab.","Tài liệu hóa test, false positives và response."],deliver:["Intel brief","IOC table","Detection rules","Test cases + README"]}
+
+];
+
+const vocab = [
+ ["threat","/θret/","Mối đe dọa","A potential cause of an unwanted security incident.","Security teams assess threats to critical assets.","Security"],
+ ["vulnerability","/ˌvʌlnərəˈbɪləti/","Lỗ hổng","A weakness that can be exploited.","The analyst confirmed a vulnerability in the service.","Security"],
+ ["exploit","/ɪkˈsplɔɪt/","Khai thác lỗ hổng; mã khai thác","To take advantage of a vulnerability.","The report describes how the flaw could be exploited.","Security"],
+ ["incident","/ˈɪnsɪdənt/","Sự cố","An event that compromises or threatens security.","The SOC opened an incident after reviewing the alert.","SOC"],
+ ["alert","/əˈlɜːrt/","Cảnh báo","A notification about a potentially relevant event.","The alert requires triage before escalation.","SOC"],
+ ["alert triage","/əˈlɜːrt ˈtriːɑːʒ/","Phân loại cảnh báo","The initial assessment and prioritization of an alert.","Alert triage helps analysts focus on high-risk activity.","SOC"],
+ ["false positive","/fɔːls ˈpɑːzətɪv/","Cảnh báo nhầm","A detection that flags benign activity as suspicious.","The rule generated a false positive during testing.","SOC"],
+ ["true positive","/truː ˈpɑːzətɪv/","Phát hiện đúng","A detection that correctly identifies suspicious or malicious activity.","The analyst validated the alert as a true positive.","SOC"],
+ ["indicator of compromise (IOC)","/ˈɪndɪkeɪtər əv ˈkɑːmprəmaɪz/","Chỉ dấu xâm nhập","An observable artifact associated with potential compromise.","The domain was added to the IOC list.","SOC"],
+ ["endpoint","/ˈendpɔɪnt/","Thiết bị đầu cuối","A device connected to a network.","The endpoint was isolated for investigation.","Endpoint"],
+ ["process","/ˈprɑːses/","Tiến trình","A running instance of a program.","The analyst inspected the parent process.","Endpoint"],
+ ["process injection","/ˈprɑːses ɪnˈdʒekʃən/","Kỹ thuật tiêm mã vào tiến trình","A technique that executes code in another process.","The memory image showed possible process injection.","Endpoint"],
+ ["persistence","/pərˈsɪstəns/","Duy trì hiện diện","A method that allows access to survive restarts or logoffs.","The Run key was investigated as a persistence mechanism.","Endpoint"],
+ ["registry","/ˈredʒɪstri/","Windows Registry","A hierarchical database used by Windows to store configuration.","The investigator reviewed the Registry hive.","Endpoint"],
+ ["event log","/ɪˈvent lɔːɡ/","Nhật ký sự kiện","A record of events generated by a system or application.","Event logs provided evidence of the logon activity.","Endpoint"],
+ ["forensic image","/fəˈrenzɪk ˈɪmɪdʒ/","Bản sao pháp chứng","A bit-for-bit copy used for forensic examination.","The forensic image was verified with SHA-256.","Forensics"],
+ ["chain of custody","/tʃeɪn əv ˈkʌstədi/","Chuỗi quản lý bằng chứng","Documentation of evidence possession and handling.","The chain of custody records every transfer.","Forensics"],
+ ["timeline reconstruction","/ˈtaɪmlaɪn ˌriːkənˈstrʌkʃən/","Tái dựng dòng thời gian","Ordering events to understand an incident sequence.","Timeline reconstruction linked the process and network events.","Forensics"],
+ ["memory dump","/ˈmeməri dʌmp/","Bản trích xuất bộ nhớ","A capture of memory contents at a point in time.","The memory dump was analyzed with Volatility.","Forensics"],
+ ["packet capture (PCAP)","/ˈpækɪt ˈkæptʃər/","Bản ghi gói tin mạng","Recorded network packets used for traffic analysis.","The PCAP contained repeated connections to one endpoint.","Network"],
+ ["beaconing","/ˈbiːkənɪŋ/","Liên lạc định kỳ với C2","Repeated communication between an implant and a controller.","The regular beaconing pattern was suspicious.","Network"],
+ ["command and control (C2)","/kəˈmænd ænd kənˈtroʊl/","Máy chủ/kênh điều khiển","Infrastructure used to communicate with compromised systems.","The host contacted a suspected C2 server.","Network"],
+ ["exfiltration","/ˌeksˌfɪltrˈeɪʃən/","Đưa dữ liệu ra ngoài trái phép","Unauthorized transfer of data out of an environment.","The investigation found no confirmed data exfiltration.","Incident Response"],
+ ["containment","/kənˈteɪnmənt/","Cô lập, hạn chế ảnh hưởng","Actions that limit the spread or impact of an incident.","Containment reduced the risk to other endpoints.","Incident Response"],
+ ["eradication","/ɪˌrædɪˈkeɪʃən/","Loại bỏ nguyên nhân/mối đe dọa","Removing the threat and its artifacts from affected systems.","Eradication followed successful containment.","Incident Response"],
+ ["recovery","/rɪˈkʌvəri/","Khôi phục","Restoring systems to normal operation securely.","Recovery included monitoring the restored endpoint.","Incident Response"],
+ ["threat hunting","/θret ˈhʌntɪŋ/","Săn tìm mối đe dọa","Proactively searching for hidden threats in telemetry.","Threat hunting identified activity missed by existing alerts.","SOC"],
+ ["detection rule","/dɪˈtekʃən ruːl/","Quy tắc phát hiện","Logic used to identify suspicious or malicious activity.","The detection rule was tested against lab data.","Detection"],
+ ["correlation","/ˌkɔːrəˈleɪʃən/","Tương quan sự kiện","Combining related events to identify a broader pattern.","Correlation linked process creation with outbound traffic.","Detection"],
+ ["severity","/səˈverəti/","Mức độ nghiêm trọng","The assessed seriousness or impact of an event.","The alert was assigned high severity after validation.","SOC"],
+ ["evidence","/ˈevɪdəns/","Bằng chứng","Information that supports or refutes an investigative claim.","Every finding should be supported by evidence.","Forensics"],
+ ["artifact","/ˈɑːrtɪfækt/","Dấu vết/hiện vật số","A data item that can provide investigative information.","The Prefetch artifact suggested program execution.","Forensics"],
+ ["malware","/ˈmælwer/","Mã độc","Software designed to perform malicious actions.","The malware created a suspicious scheduled task.","Malware"],
+ ["static analysis","/ˈstætɪk əˈnæləsɪs/","Phân tích tĩnh","Examining a file without executing it.","Static analysis revealed suspicious imports.","Malware"],
+ ["dynamic analysis","/daɪˈnæmɪk əˈnæləsɪs/","Phân tích động","Observing a program while it executes in a controlled environment.","Dynamic analysis recorded the process and network behavior.","Malware"],
+ ["reverse engineering","/rɪˈvɜːrs ˌendʒɪˈnɪrɪŋ/","Dịch ngược","Analyzing a program to understand its internal logic.","Reverse engineering helped explain the loader routine.","Malware"],
+ ["payload","/ˈpeɪloʊd/","Mã/tải trọng thực thi","The component that performs the intended action.","The payload was analyzed in an isolated lab.","Malware"],
+ ["log source","/lɔːɡ sɔːrs/","Nguồn log","A system or application that generates logs.","The analyst verified the log source before writing a rule.","SIEM"],
+ ["query","/ˈkwɪəri/","Truy vấn","A request to search or retrieve data.","The SPL query returned relevant authentication events.","SIEM"],
+ ["dashboard","/ˈdæʃbɔːrd/","Bảng điều khiển","A visual display of metrics and data.","The dashboard summarizes endpoint alerts.","SIEM"],
+ ["escalation","/ˌeskəˈleɪʃən/","Chuyển cấp xử lý","Passing an issue to a higher tier or responsible team.","The analyst escalated the confirmed incident to L2.","SOC"],
+ ["remediation","/rɪˌmiːdiˈeɪʃən/","Khắc phục","Actions taken to correct a weakness or remove impact.","The remediation plan included patching and credential reset.","Incident Response"]
+];
+
+const englishRoadmap = [
+ {title:"1. Security Vocabulary",desc:"Học 150–250 từ nền tảng: threat, incident, evidence, process, persistence, containment...",tasks:["Học 10–15 từ/ngày bằng flashcards.","Viết câu ví dụ gắn với SOC.","Ôn lại từ sau 1, 3 và 7 ngày."],xp:100},
+ {title:"2. Reading Logs & Alerts",desc:"Đọc hiểu tên trường, alert description, severity, event details và technical documentation.",tasks:["Đọc 1 alert mẫu/ngày.","Gạch chân từ/cụm từ mới.","Tóm tắt alert bằng tiếng Việt rồi tiếng Anh."],xp:120},
+ {title:"3. Reading Technical Docs",desc:"Đọc Microsoft docs, Splunk docs, Sigma rules, MITRE ATT&CK và security advisories.",tasks:["Đọc một mục docs ngắn.","Ghi 5 thuật ngữ và 3 ý chính.","Viết summary 3–5 câu."],xp:150},
+ {title:"4. Technical Writing",desc:"Viết triage notes, incident summary, timeline, findings và remediation bằng tiếng Anh.",tasks:["Dùng template report.","Viết câu ngắn, trung tính, dựa trên evidence.","Tự kiểm tra grammar và terminology."],xp:180},
+ {title:"5. Listening & Speaking",desc:"Luyện nghe nội dung cybersecurity và trình bày project/incident trong phỏng vấn.",tasks:["Nghe 5–10 phút nội dung kỹ thuật.","Shadowing 5 câu.","Trình bày một project trong 1–2 phút."],xp:150}
+];
+
+const stateKey="sonsJourney_v1";
+let state=loadState();
+let currentPage="home",activeFilter="all",activeMissionId=null,modalChecks={};
+let quizState=null;
+function freshState(){return {name:"Xuân Sơn",goal:"SOC Analyst",xp:0,completed:[],started:[],checklists:{},vocabKnown:[],activity:[],streak:0,lastStudyDate:null,theme:"dark"}}
+function loadState(){try{return {...freshState(),...JSON.parse(localStorage.getItem(stateKey)||"{}")}}catch(e){return freshState()}}
+function saveState(){localStorage.setItem(stateKey,JSON.stringify(state));renderAll()}
+function allMissions(){return curriculum.flatMap(c=>c.missions.map(m=>({id:m[0],title:m[1],xp:m[2],description:m[3],steps:m.slice(4),category:c.name,categoryId:c.id,color:c.color,icon:c.icon})))}
+function missionById(id){return allMissions().find(m=>m.id===id)}
+function allProjectMissions(){return projects.map(p=>({id:p.id,title:p.title,xp:p.xp,description:p.goal,steps:p.steps,category:p.category,color:"#28a5ff",icon:"🧪",project:true}))}
+function totalTasks(){return allMissions().length}
+function completedCount(){return state.completed.length}
+function overallPct(){return Math.round(completedCount()/totalTasks()*100)}
+function levelInfo(xp=state.xp){let level=1,remaining=xp;while(remaining>=level*500){remaining-=level*500;level++}return {level,within:remaining,needed:level*500,title:["Novice","Learner","Apprentice","Analyst","Investigator","Specialist","Expert","Elite","Master","SOC Legend"][Math.min(level-1,9)]}}
+function fmtDate(){return new Date().toLocaleDateString("vi-VN",{weekday:"long",day:"2-digit",month:"2-digit",year:"numeric"})}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function toast(msg){let t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2600)}
+function addActivity(text,xp=0){state.activity.unshift({text,xp,time:new Date().toISOString()});state.activity=state.activity.slice(0,12)}
+function startMission(id){if(!state.started.includes(id)){state.started.push(id);addActivity("Bắt đầu: "+missionById(id).title,0);saveState()}openMission(id)}
+function openMission(id){
+ let m=missionById(id);if(!m)return;activeMissionId=id;modalChecks={...(state.checklists[id]||{})};
+ document.getElementById("modalTag").textContent=m.category.toUpperCase();
+ document.getElementById("modalTitle").textContent=m.title;
+ document.getElementById("modalMeta").textContent=`${m.category} · ${m.xp} XP · ${state.completed.includes(id)?"Đã hoàn thành":state.started.includes(id)?"Đang học":"Chưa bắt đầu"}`;
+ let steps=m.steps.map((s,i)=>`<label class="check-row"><input type="checkbox" data-check="${i}" ${modalChecks[i]?"checked":""}><span>${esc(s)}</span></label>`).join("");
+ document.getElementById("modalBody").innerHTML=`<p>${esc(m.description)}</p><h3>🧩 Các bước học & thực hành</h3><div class="checklist">${steps}</div><h3>✅ Tiêu chí hoàn thành</h3><ul><li>Hoàn thành các bước học và thực hành.</li><li>Ghi lại kiến thức mới hoặc kết quả trong notes/README.</li><li>Có thể giải thích bằng lời của mình những gì đã học.</li></ul><p style="color:#7899b9">Mẹo: checklist giúp bạn theo dõi tiến độ, nhưng bạn vẫn có thể hoàn thành nhiệm vụ khi đã tự tin với kết quả học tập.</p>`;
+ document.getElementById("modalReward").textContent=state.completed.includes(id)?"✓ Đã nhận XP":"+"+m.xp+" XP";
+ document.getElementById("completeMissionBtn").textContent=state.completed.includes(id)?"Đã hoàn thành ✓":"Hoàn thành & nhận XP";
+ document.getElementById("completeMissionBtn").disabled=state.completed.includes(id);
+ document.getElementById("modalBackdrop").classList.add("open");
+}
+function closeModal(){document.getElementById("modalBackdrop").classList.remove("open");activeMissionId=null}
+function saveChecklist(){if(!activeMissionId)return;state.checklists[activeMissionId]={...modalChecks};if(!state.started.includes(activeMissionId))state.started.push(activeMissionId);saveState();toast("Đã lưu tiến độ nhiệm vụ")}
+function completeMission(){
+ if(!activeMissionId||state.completed.includes(activeMissionId))return;
+ let m=missionById(activeMissionId);state.completed.push(activeMissionId);state.xp+=m.xp;state.started=state.started.filter(x=>x!==activeMissionId);
+ let today=new Date().toISOString().slice(0,10);if(state.lastStudyDate!==today){let yesterday=new Date(Date.now()-86400000).toISOString().slice(0,10);state.streak=state.lastStudyDate===yesterday?state.streak+1:1;state.lastStudyDate=today}
+ addActivity("Hoàn thành: "+m.title,m.xp);saveState();closeModal();toast(`Nhiệm vụ hoàn thành! +${m.xp} XP 🎉`);
+}
+function renderStats(){
+ const lv=levelInfo(),pct=Math.round(lv.within/lv.needed*100),done=completedCount(),total=totalTasks();
+ document.getElementById("heroName").textContent=state.name;document.getElementById("profileName").textContent=state.name;document.getElementById("nameInput").value=state.name;document.getElementById("goalInput").value=state.goal;
+ document.getElementById("levelPill").textContent=`Lv. ${lv.level} · ${lv.title}`;document.getElementById("heroXpBar").style.width=pct+"%";document.getElementById("heroXpLabel").textContent=`${lv.within} / ${lv.needed} XP`;
+ document.getElementById("profileTitle").textContent=state.goal+" · In Progress";document.getElementById("profileLevel").textContent=`Level ${lv.level} · ${lv.title}`;
+ const stats=[["⭐","Cấp độ",`Lv. ${lv.level}`,lv.title],["⚡","Tổng kinh nghiệm",state.xp+" XP","Tích lũy từ nhiệm vụ"],["☑","Nhiệm vụ hoàn thành",`${done} / ${total}`,"Tiến độ học tập"],["🔥","Chuỗi ngày học",state.streak+" ngày","Học đều đặn mỗi ngày"]];
+ document.getElementById("statsGrid").innerHTML=stats.map(s=>`<div class="stat"><div class="stat-top"><span class="stat-icon">${s[0]}</span>${s[1]}</div><strong>${s[2]}</strong><small>${s[3]}</small></div>`).join("");
+ document.getElementById("progressRing").style.setProperty("--progress",overallPct()*3.6+"deg");document.getElementById("overallPct").textContent=overallPct()+"%";document.getElementById("completedCount").textContent=done;document.getElementById("totalCount").textContent=total;
+ document.getElementById("categoryProgress").innerHTML=curriculum.map(c=>{let n=c.missions.filter(m=>state.completed.includes(m[0])).length;return `<div class="progress-line"><div class="line-label"><span>${c.icon} ${c.name}</span><span>${n}/${c.missions.length}</span></div><div class="mini-progress"><span style="width:${n/c.missions.length*100}%;--accent:${c.color}"></span></div></div>`}).join("");
+ document.getElementById("todayLabel").textContent=fmtDate();
+}
+function renderRoadmap(){
+ document.getElementById("roadmapPreview").innerHTML=curriculum.map(c=>{let n=c.missions.filter(m=>state.completed.includes(m[0])).length;return `<div class="road-card" style="--accent:${c.color}" data-road="${c.id}"><div class="road-icon">${c.icon}</div><strong>${c.name}</strong><small>${n}/${c.missions.length} nhiệm vụ · ${c.skills.slice(0,2).join(" · ")}</small><div class="mini-progress"><span style="width:${n/c.missions.length*100}%"></span></div></div>`}).join("");
+ document.getElementById("roadmapDetails").innerHTML=curriculum.map(c=>{let n=c.missions.filter(m=>state.completed.includes(m[0])).length;return `<article class="road-detail" style="border-top:2px solid ${c.color}"><div style="font-size:23px">${c.icon}</div><h3 style="font-size:14px;margin:8px 0">${c.name}</h3><p style="font-size:11px;color:var(--muted);line-height:1.6">${c.desc}</p><div class="mini-progress" style="height:6px;background:#20364d;border-radius:9px"><span style="display:block;height:100%;width:${n/c.missions.length*100}%;background:${c.color};border-radius:9px"></span></div><small style="display:block;color:var(--muted);margin:8px 0">${n}/${c.missions.length} nhiệm vụ hoàn thành</small><h4 style="font-size:11px">Skills</h4><p style="font-size:10px;color:#a9c3df">${c.skills.join(" · ")}</p><button class="btn secondary small" data-road="${c.id}">Xem nhiệm vụ</button></article>`}).join("");
+ document.querySelectorAll("[data-road]").forEach(el=>el.addEventListener("click",()=>{goPage("missions");document.getElementById("categoryFilter").value=el.dataset.road;renderMissions()}));
+}
+function renderMissions(){
+ let cat=document.getElementById("categoryFilter").value,search=(document.getElementById("missionSearch").value||"").toLowerCase();
+ let list=allMissions().filter(m=>(cat==="all"||m.categoryId===cat)&&(`${m.title} ${m.description} ${m.category}`.toLowerCase().includes(search)));
+ if(activeFilter==="todo")list=list.filter(m=>!state.completed.includes(m.id)&&!state.started.includes(m.id));
+ if(activeFilter==="doing")list=list.filter(m=>state.started.includes(m.id)&&!state.completed.includes(m.id));
+ if(activeFilter==="done")list=list.filter(m=>state.completed.includes(m.id));
+ document.getElementById("allMissions").innerHTML=list.length?list.map(m=>missionCard(m)).join(""):`<div class="empty">Không tìm thấy nhiệm vụ phù hợp.</div>`;
+ document.querySelectorAll("[data-start]").forEach(b=>b.addEventListener("click",()=>startMission(b.dataset.start)));
+}
+function missionCard(m){
+ let done=state.completed.includes(m.id),doing=state.started.includes(m.id);
+ return `<article class="mission-card ${done?"done":""}"><div class="m-icon" style="color:${m.color}">${m.icon}</div><div style="min-width:0;flex:1"><span class="tag" style="color:${m.color}">${m.category}</span><h3>${esc(m.title)}</h3><div class="m-bottom"><span class="xp">⚡ +${m.xp} XP</span><button class="btn small ${done?"success":"secondary"}" data-start="${m.id}">${done?"Xem lại ✓":doing?"Tiếp tục":"Bắt đầu"}</button></div></div></article>`;
+}
+function renderProjects(){
+ document.getElementById("projectList").innerHTML=projects.map(p=>`<article class="project-card"><span class="tag">${p.level}</span><h3>${p.title}</h3><p>${p.goal}</p><div style="font-size:10px;color:var(--cyan)">🧰 ${p.tools.join(" · ")}</div><h4 style="font-size:11px">Các giai đoạn</h4><ul>${p.steps.map(s=>`<li>${esc(s)}</li>`).join("")}</ul><h4 style="font-size:11px">Deliverables</h4><ul>${p.deliver.map(s=>`<li>${esc(s)}</li>`).join("")}</ul><div class="project-footer"><span class="xp" style="color:var(--gold);font-size:11px">⚡ ${p.xp} XP</span><button class="btn secondary small" data-project="${p.id}">Mở project</button></div></article>`).join("");
+ document.querySelectorAll("[data-project]").forEach(b=>b.addEventListener("click",()=>openProject(b.dataset.project)));
+}
+function openProject(id){
+ let p=projects.find(x=>x.id===id);activeMissionId=null;
+ document.getElementById("modalTag").textContent="PROJECT LAB · "+p.level.toUpperCase();document.getElementById("modalTitle").textContent=p.title;document.getElementById("modalMeta").textContent=p.category+" · "+p.xp+" XP";
+ document.getElementById("modalBody").innerHTML=`<p>${esc(p.goal)}</p><h3>🧰 Công cụ</h3><p>${p.tools.map(esc).join(" · ")}</p><h3>🗺️ Lộ trình triển khai</h3><ol>${p.steps.map(s=>`<li>${esc(s)}</li>`).join("")}</ol><h3>📦 Deliverables cho GitHub/CV</h3><ul>${p.deliver.map(s=>`<li>${esc(s)}</li>`).join("")}</ul><p><strong>Portfolio tip:</strong> Không upload dữ liệu nhạy cảm, credentials, private IP của tổ chức, hoặc mẫu độc hại. Dùng dữ liệu lab và ghi rõ scope.</p>`;
+ document.getElementById("modalReward").textContent="Project checklist · "+p.xp+" XP";document.getElementById("completeMissionBtn").textContent="Đóng project";document.getElementById("completeMissionBtn").disabled=false;document.getElementById("saveProgressBtn").style.display="none";document.getElementById("completeMissionBtn").onclick=()=>{document.getElementById("completeMissionBtn").onclick=completeMission;document.getElementById("saveProgressBtn").style.display="";closeModal()};document.getElementById("modalBackdrop").classList.add("open");
+}
+function renderVocab(){
+ let search=(document.getElementById("vocabSearch").value||"").toLowerCase(),topic=document.getElementById("vocabTopic").value;
+ let list=vocab.filter(v=>(topic==="all"||v[5]===topic)&&v.join(" ").toLowerCase().includes(search));
+ document.getElementById("vocabList").innerHTML=list.map(v=>{let known=state.vocabKnown.includes(v[0]);return `<article class="vocab-card"><div class="term">${esc(v[0])}</div><div class="pron">${esc(v[1])}</div><div class="definition"><strong>${esc(v[2])}</strong><br>${esc(v[3])}</div><div class="example">“${esc(v[4])}”</div><div class="vocab-bottom"><span class="tag">${v[5]}</span><button class="btn small ${known?"success":"secondary"}" data-known="${esc(v[0])}">${known?"Đã nhớ ✓":"Đánh dấu nhớ"}</button></div></article>`}).join("")||`<div class="empty">Không tìm thấy thuật ngữ.</div>`;
+ document.querySelectorAll("[data-known]").forEach(b=>b.addEventListener("click",()=>{let term=b.dataset.known;if(state.vocabKnown.includes(term))state.vocabKnown=state.vocabKnown.filter(x=>x!==term);else state.vocabKnown.push(term);saveState();renderVocab()}));
+}
+function renderEnglish(){
+ document.getElementById("englishRoadmap").innerHTML=englishRoadmap.map((r,i)=>`<article class="road-detail" style="border-top:2px solid ${curriculum[4].color}"><div style="font-size:21px">📘</div><h3 style="font-size:13px">${r.title}</h3><p style="font-size:11px;color:var(--muted);line-height:1.6">${r.desc}</p><ul style="font-size:10px;color:#b8cce1;line-height:1.8">${r.tasks.map(t=>`<li>${esc(t)}</li>`).join("")}</ul><span class="xp">⚡ ${r.xp} XP suggested</span></article>`).join("");
+ document.getElementById("englishExercise").innerHTML=`<p style="font-size:12px;color:var(--muted)">Translate this SOC sentence into Vietnamese:</p><blockquote style="border-left:2px solid var(--cyan);padding:10px 15px;color:#d4e6f8;font-size:14px">“The analyst isolated the endpoint after validating a suspicious PowerShell alert.”</blockquote><textarea id="translationAnswer" rows="3" style="width:100%;background:#0a1b2d;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px" placeholder="Viết bản dịch của bạn..."></textarea><button class="btn" style="margin-top:10px" id="showTranslation">Hiện gợi ý dịch</button><p id="translationHint" style="display:none;color:var(--green)">Chuyên viên phân tích đã cô lập thiết bị đầu cuối sau khi xác minh một cảnh báo PowerShell đáng ngờ.</p>`;
+ document.getElementById("showTranslation").onclick=()=>document.getElementById("translationHint").style.display="block";
+}
+function renderActivity(){
+ let list=state.activity.slice(0,5);
+ document.getElementById("activityList").innerHTML=list.length?list.map(a=>`<div class="activity-item"><div class="activity-icon">${a.xp?"✓":"◷"}</div><div><strong>${esc(a.text)}</strong><small>${a.xp?`+${a.xp} XP`:"Đang học"}</small></div><span class="time">${new Date(a.time).toLocaleDateString("vi-VN")}</span></div>`).join(""):`<div class="empty" style="padding:12px">Chưa có hoạt động. Bắt đầu nhiệm vụ đầu tiên nhé!</div>`;
+}
+function renderDaily(){
+ let m=allMissions().find(x=>!state.completed.includes(x.id))||allMissions()[0];
+ document.getElementById("dailyMission").innerHTML=`<div class="feature-mission"><div class="mission-symbol">${m.icon}</div><div><span class="tag">${m.category}</span><h3>${esc(m.title)}</h3><p>${esc(m.description)}</p><div class="meta-row"><span>◷ 30–60 phút</span><span>⚡ +${m.xp} XP</span><span>☑ ${m.steps.length} bước</span></div></div><button class="btn" data-start="${m.id}">${state.completed.includes(m.id)?"Ôn tập":"Bắt đầu"} →</button></div>`;
+ document.querySelectorAll("#dailyMission [data-start]").forEach(b=>b.addEventListener("click",()=>startMission(b.dataset.start)));
+}
+function renderDailyWord(){
+ let unknown=vocab.filter(v=>!state.vocabKnown.includes(v[0]));let v=unknown[Math.floor(Date.now()/86400000)%Math.max(unknown.length,1)]||vocab[0];
+ document.getElementById("dailyWord").innerHTML=`<div class="word">${esc(v[0])}</div><div class="phonetic">${esc(v[1])}</div><div class="meaning"><strong>${esc(v[2])}</strong><br>${esc(v[3])}</div><div class="word-actions"><button class="btn secondary small" data-goto="vocab">Học từ này →</button><button class="btn small" data-known="${esc(v[0])}">Đã nhớ ✓</button></div>`;
+ document.querySelectorAll("#dailyWord [data-goto]").forEach(b=>b.onclick=()=>goPage("vocab"));document.querySelectorAll("#dailyWord [data-known]").forEach(b=>b.onclick=()=>{state.vocabKnown.push(v[0]);saveState();renderDailyWord();toast("Từ vựng đã được đánh dấu!")});
+}
+function renderStatsPage(){
+ const lv=levelInfo();let data=[["⚡","Tổng XP",state.xp],["🏅","Cấp độ",lv.level],["☑","Nhiệm vụ",completedCount()+"/"+totalTasks()],["🇬🇧","Từ đã nhớ",state.vocabKnown.length+"/"+vocab.length]];
+ document.getElementById("statsDetail").innerHTML=data.map(s=>`<div class="stat"><div class="stat-top"><span class="stat-icon">${s[0]}</span>${s[1]}</div><strong>${s[2]}</strong></div>`).join("");
+ document.getElementById("statsCategories").innerHTML=curriculum.map(c=>{let n=c.missions.filter(m=>state.completed.includes(m[0])).length;return `<div class="progress-line" style="margin:13px 0"><div class="line-label"><span>${c.icon} ${c.name}</span><span>${n}/${c.missions.length} · ${Math.round(n/c.missions.length*100)}%</span></div><div class="mini-progress" style="height:8px"><span style="width:${n/c.missions.length*100}%;--accent:${c.color}"></span></div></div>`}).join("");
+ let badgeList=[["🌱","First Step","Hoàn thành nhiệm vụ đầu tiên",completedCount()>=1],["🔥","Consistency","Học 3 ngày liên tiếp",state.streak>=3],["🔎","Investigator","Hoàn thành 5 nhiệm vụ Forensics",curriculum[1].missions.filter(m=>state.completed.includes(m[0])).length>=5],["🛡️","SOC Ready","Hoàn thành 5 nhiệm vụ SOC",curriculum[2].missions.filter(m=>state.completed.includes(m[0])).length>=5],["🇬🇧","Word Collector","Nhớ 10 thuật ngữ",state.vocabKnown.length>=10],["🏆","Journey Complete","Hoàn thành toàn bộ nhiệm vụ",completedCount()===totalTasks()]];
+ document.getElementById("badges").innerHTML=badgeList.map(b=>`<div class="road-detail" style="opacity:${b[3]?1:.48}"><div style="font-size:25px">${b[0]}</div><strong style="font-size:12px">${b[1]} ${b[3]?"✓":"🔒"}</strong><p style="font-size:10px;color:var(--muted)">${b[2]}</p></div>`).join("");
+}
+function renderAll(){renderStats();renderRoadmap();renderDaily();renderDailyWord();renderActivity();renderMissions();renderProjects();renderVocab();renderEnglish();renderStatsPage()}
+function goPage(page){
+ currentPage=page;document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+page));document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));window.scrollTo({top:0,behavior:"smooth"});
+}
+function exportData(){let blob=new Blob([JSON.stringify(state,null,2)],{type:"application/json"});let url=URL.createObjectURL(blob);let a=document.createElement("a");a.href=url;a.download="sons-journey-progress.json";a.click();URL.revokeObjectURL(url);toast("Đã xuất file tiến độ")}
+function startQuiz(){
+ quizState={index:0,correct:0,questions:[...vocab].sort(()=>Math.random()-.5).slice(0,10)};showQuizQuestion();
+}
+function showQuizQuestion(){
+ let q=quizState.questions[quizState.index];let choices=[q[2],...vocab.filter(v=>v[0]!==q[0]).sort(()=>Math.random()-.5).slice(0,3).map(v=>v[2])].sort(()=>Math.random()-.5);
+ document.getElementById("vocabList").innerHTML=`<div class="quiz-box"><div class="eyebrow">Vocabulary challenge · ${quizState.index+1}/10</div><div class="quiz-question">“${esc(q[0])}” có nghĩa là gì?</div><div class="quiz-options">${choices.map(c=>`<button class="quiz-option" data-answer="${esc(c)}">${esc(c)}</button>`).join("")}</div><p id="quizFeedback" style="font-size:12px;margin-top:14px;color:var(--muted)"></p><button class="btn" id="quizNext" style="display:none;margin-top:10px">${quizState.index===9?"Xem kết quả":"Câu tiếp theo"} →</button></div>`;
+ document.querySelectorAll("[data-answer]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-answer]").forEach(x=>x.disabled=true);let correct=b.dataset.answer===q[2];b.classList.add(correct?"correct":"wrong");if(correct){quizState.correct++;document.getElementById("quizFeedback").textContent="Chính xác! "+q[3];document.getElementById("quizFeedback").style.color="var(--green)"}else{document.getElementById("quizFeedback").textContent="Đáp án đúng: "+q[2];}document.getElementById("quizNext").style.display="inline-block"});
+ document.getElementById("quizNext").onclick=()=>{if(quizState.index<9){quizState.index++;showQuizQuestion()}else{let xp=quizState.correct*5;state.xp+=xp;addActivity("Hoàn thành vocabulary quiz",xp);saveState();document.getElementById("vocabList").innerHTML=`<div class="quiz-box"><div style="font-size:35px">🎉</div><h2>Kết quả: ${quizState.correct}/10</h2><p>Bạn nhận được <strong style="color:var(--gold)">+${xp} XP</strong></p><button class="btn" id="quizAgain">Luyện lại</button></div>`;document.getElementById("quizAgain").onclick=startQuiz}};
+}
+document.querySelectorAll("#nav button").forEach(b=>b.addEventListener("click",()=>goPage(b.dataset.page)));
+document.querySelectorAll("[data-goto]").forEach(b=>b.addEventListener("click",()=>goPage(b.dataset.goto)));
+document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{activeFilter=b.dataset.filter;document.querySelectorAll("[data-filter]").forEach(x=>x.classList.toggle("active",x===b));renderMissions()}));
+document.getElementById("modalClose").onclick=closeModal;document.getElementById("modalBackdrop").addEventListener("click",e=>{if(e.target.id==="modalBackdrop")closeModal()});
+document.getElementById("saveProgressBtn").onclick=saveChecklist;document.getElementById("completeMissionBtn").onclick=completeMission;
+document.getElementById("modalBody").addEventListener("change",e=>{if(e.target.matches("[data-check]"))modalChecks[e.target.dataset.check]=e.target.checked});
+document.getElementById("categoryFilter").innerHTML+=[...curriculum].map(c=>`<option value="${c.id}">${c.name}</option>`).join("");
+document.getElementById("vocabTopic").innerHTML+=[...new Set(vocab.map(v=>v[5]))].map(t=>`<option>${t}</option>`).join("");
+document.getElementById("missionSearch").addEventListener("input",renderMissions);document.getElementById("categoryFilter").addEventListener("change",renderMissions);
+document.getElementById("vocabSearch").addEventListener("input",renderVocab);document.getElementById("vocabTopic").addEventListener("change",renderVocab);
+document.getElementById("globalSearch").addEventListener("keydown",e=>{if(e.key==="Enter"){let q=e.target.value;goPage("missions");document.getElementById("missionSearch").value=q;renderMissions()}});
+document.getElementById("quizStart").onclick=startQuiz;
+document.getElementById("nameInput").addEventListener("change",e=>{state.name=e.target.value.trim()||"Xuân Sơn";saveState();toast("Đã cập nhật tên")});
+document.getElementById("goalInput").addEventListener("change",e=>{state.goal=e.target.value;saveState()});
+document.getElementById("exportBtn").onclick=exportData;document.getElementById("exportBtn2").onclick=exportData;
+document.getElementById("importFile").addEventListener("change",async e=>{let f=e.target.files[0];if(!f)return;try{let data=JSON.parse(await f.text());state={...freshState(),...data};saveState();toast("Đã nhập dữ liệu tiến độ")}catch(err){toast("File JSON không hợp lệ")}});
+document.getElementById("resetBtn").onclick=()=>{if(confirm("Bạn chắc chắn muốn xóa toàn bộ XP, nhiệm vụ và tiến độ đã lưu? Hãy xuất backup trước nếu cần.")){state=freshState();saveState();toast("Đã reset hành trình")}};
+document.getElementById("themeBtn").onclick=()=>{document.body.classList.toggle("light");toast("Giao diện cyber dark đang được tối ưu")};
+renderAll();
+</script>
+</body>
+</html>
