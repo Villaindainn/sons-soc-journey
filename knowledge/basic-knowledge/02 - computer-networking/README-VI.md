@@ -1,4 +1,4 @@
-
+🌐 **Ngôn ngữ:** [English](README.md) | [Tiếng Việt](README-VI.md)
 
 # 02 - Kiến thức cơ bản về Mạng máy tính (Computer Networking Basics)
 
