@@ -1,3 +1,4 @@
+🌐 **Language:** [English](README.md) | [Tiếng Việt](README-VI.md)
 
 # 02 - Computer Networking Basics
 
