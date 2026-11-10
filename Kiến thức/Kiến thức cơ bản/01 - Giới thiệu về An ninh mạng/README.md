@@ -1,3 +1,5 @@
+🌐 **Language:** [English](README.md) | [Tiếng Việt](README-VI.md)
+
 # 01 - Giới thiệu về An ninh mạng (Cybersecurity Introduction)
 
 ## 1. Tổng quan
