@@ -1,3 +1,4 @@
+🌐 **Language:** [English](README.md) | [Tiếng Việt](README-VI.md)
 
 # 01 - Cybersecurity Introduction
 
