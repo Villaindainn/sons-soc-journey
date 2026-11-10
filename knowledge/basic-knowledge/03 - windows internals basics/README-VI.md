@@ -1,3 +1,4 @@
+🌐 **Ngôn ngữ:** [English](README.md) | [Tiếng Việt](README-VI.md)
 
 # 03 - Kiến thức cơ bản về Windows Internals (Windows Internals Basics)
 
